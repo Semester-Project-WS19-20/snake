@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <emscripten.h>
 #include <stdbool.h>
 
@@ -50,7 +50,8 @@ typedef enum SPRITES_DECALS
     NUM_SPRITES_DECALS
 } SPRITES_DECALS;
 
-enum {
+enum
+{
     MAX_SNAKE_SEGMENTS = 50,
     TILE_DIMENSION = 40,
     STATUS_BAR_HEIGHT = 2, // given in tiles
@@ -67,7 +68,7 @@ enum {
 #include "snake_actor.h"
 #include "background_actor.h"
 
-struct engine 
+struct engine
 {
     unsigned int fps;
     unsigned int current_frame;
@@ -101,8 +102,8 @@ struct engine
 engine eng;
 
 engine *engine_init(
-        unsigned int w,
-        unsigned int h);
+    unsigned int w,
+    unsigned int h);
 
 void engine_destroy();
 

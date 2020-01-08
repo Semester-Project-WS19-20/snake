@@ -20,25 +20,24 @@ typedef enum game_state
 
 typedef enum binding_type
 {
-    BINDING_ATOMIC,      // press button to turn state on,
-                         // press again to switch off
+    BINDING_ATOMIC, // press button to turn state on,
+                    // press again to switch off
 
-    BINDING_CONTINUOUS,  // press button and state turns on,
-                         // release and state turns off
+    BINDING_CONTINUOUS, // press button and state turns on,
+                        // release and state turns off
 
-    BINDING_ONE_TIME     // press button and state turns on,
-                         // state must then be turned off
-                         // manually
+    BINDING_ONE_TIME // press button and state turns on,
+                     // state must then be turned off
+                     // manually
 } binding_type;
 
 typedef struct key_state_binding key_state_binding;
 struct key_state_binding
 {
     SDL_Keycode k;
-    game_state s; 
+    game_state s;
     binding_type t;
 };
-
 
 enum
 {
