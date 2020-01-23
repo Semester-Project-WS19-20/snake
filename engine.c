@@ -10,8 +10,8 @@ bool should_continue_logic_loops();
 void setup_bindings();
 
 engine *engine_init(
-        unsigned int w,
-        unsigned int h)
+    unsigned int w,
+    unsigned int h)
 {
     eng.fps = 80;
     eng.current_frame = 0;
@@ -28,10 +28,11 @@ engine *engine_init(
     eng.w = w;
     eng.h = h;
 
-    if(eng.window == NULL) {
+    if (eng.window == NULL)
+    {
         fprintf(
-                stderr,
-                "Window could not be created: %s\n", SDL_GetError());
+            stderr,
+            "Window could not be created: %s\n", SDL_GetError());
         return NULL;
     }
 
@@ -68,6 +69,22 @@ void engine_start()
 
 void engine_reset()
 {
+    // int randomNumber = (rand() % 4) + 1;
+    // int SCREEN_WIDTH = 600;
+    // int SCREEN_HEIGHT = 400;
+    // char path[13];
+    // snprintf(path, 13, "assets/%d.png", randomNumber);
+    // SDL_Surface *image = IMG_Load(path);
+    // if (!image)
+    // {
+    //     printf("IMG_Load: %s\n", IMG_GetError());
+    // }
+    // SDL_Rect dest = {.x = 0, .y = 0, .w = SCREEN_WIDTH, .h = SCREEN_HEIGHT};
+    // SDL_Texture *tex = SDL_CreateTextureFromSurface(eng.renderer, image);
+    // SDL_RenderCopy(eng.renderer, tex, NULL, &dest);
+    // SDL_DestroyTexture(tex);
+    // SDL_FreeSurface(image);
+
     snake_actor_init(&eng.snake_actor);
     memset(eng.occupied_gridpoints, 0, eng.grid_width * eng.grid_height * sizeof(*eng.occupied_gridpoints));
     apple_actor_init(&eng.apple_actor);
@@ -77,22 +94,23 @@ void engine_reset()
 
 void setup_textures()
 {
-    char * filenames[] = {
+    char *filenames[] = {
         "assets/sand.png",
         "assets/sprites.png",
-        "assets/status_bar.png"
-    };
+        "assets/status_bar.png"};
     int i;
 
-    for (i = 0; i < sizeof(filenames) / sizeof(filenames[0]); i++) {
-        char * fname = filenames[i];
+    for (i = 0; i < sizeof(filenames) / sizeof(filenames[0]); i++)
+    {
+        char *fname = filenames[i];
         SDL_Surface *img = IMG_Load(fname);
 
-        if(!img){
+        if (!img)
+        {
             fprintf(stdout, "Error! Could not load %s\n", fname);
             exit(1);
         }
-        
+
         eng.textures[i] = SDL_CreateTextureFromSurface(eng.renderer, img);
 
         SDL_FreeSurface(img);
@@ -105,25 +123,26 @@ void setup_decals()
 
     int imgw, imgh;
     SDL_QueryTexture(eng.textures[SPRITES_TEXTURE],
-            NULL, NULL, &imgw, &imgh);
+                     NULL, NULL, &imgw, &imgh);
 
-    for (i = 0; i < NUM_SPRITES_DECALS; i++) {
-        double w = 1/8. * imgw;
-        double h = 1/2. * imgh;
+    for (i = 0; i < NUM_SPRITES_DECALS; i++)
+    {
+        double w = 1 / 8. * imgw;
+        double h = 1 / 2. * imgh;
         double x = (double)(i % 8) * w;
         double y = (double)(i / 8) * h;
 
         decal_init(
-                &eng.sprites_decals[i],
-                eng.textures[SPRITES_TEXTURE],
-                x,
-                y,
-                w,
-                h);
+            &eng.sprites_decals[i],
+            eng.textures[SPRITES_TEXTURE],
+            x,
+            y,
+            w,
+            h);
     }
 
     SDL_QueryTexture(eng.textures[SAND_TEXTURE],
-            NULL, NULL, &imgw, &imgh);
+                     NULL, NULL, &imgw, &imgh);
 
     decal_init(
         &(eng.sand_decal),
@@ -149,15 +168,16 @@ void setup_actors()
 
 bool should_continue_logic_loops()
 {
-    if (eng.should_start_logic_loop) {
+    if (eng.should_start_logic_loop)
+    {
         unsigned int logic_loop_start_time = SDL_GetTicks();
-        double elapsed_frames = (double)(logic_loop_start_time \
-                - eng.start_time) / 1000.0f * eng.fps;
+        double elapsed_frames = (double)(logic_loop_start_time - eng.start_time) / 1000.0f * eng.fps;
 
         eng.whole_frames_to_do = (unsigned int)elapsed_frames - eng.current_frame;
     }
 
-    if (!eng.whole_frames_to_do) {
+    if (!eng.whole_frames_to_do)
+    {
         eng.should_start_logic_loop = true;
         return false;
     }
@@ -172,19 +192,22 @@ void loop_handler()
 {
     process_input();
 
-//    if (is_state_active(GS_QUIT)) {
-//        return;
-//    }
+    //    if (is_state_active(GS_QUIT)) {
+    //        return;
+    //    }
 
     SDL_RenderClear(eng.renderer);
 
     actor_list *al;
-    for (al = eng.render_list; al != NULL; al = al->next) {
+    for (al = eng.render_list; al != NULL; al = al->next)
+    {
         al->a->render_handler(al->a);
     }
 
-    while (should_continue_logic_loops()) {
-        for (al = eng.logic_list; al != NULL; al = al->next) {
+    while (should_continue_logic_loops())
+    {
+        for (al = eng.logic_list; al != NULL; al = al->next)
+        {
             al->a->logic_handler(al->a);
         }
     }

@@ -2,10 +2,10 @@
 #include "sprite.h"
 
 sprite *sprite_init(
-        sprite *sp,
-        int w,
-        int h,
-        decal *d)
+    sprite *sp,
+    int w,
+    int h,
+    decal *d)
 {
     sp->w = w;
     sp->h = h;
@@ -24,7 +24,7 @@ void sprite_render(sprite *sp)
     dest.w = sp->w;
     dest.h = sp->h;
 
-    SDL_RenderCopy (eng.renderer, sp->d->texture, &sp->d->rect, &dest);
+    SDL_RenderCopy(eng.renderer, sp->d->texture, &sp->d->rect, &dest);
 }
 
 void sprite_set_decal(sprite *sp, decal *d)
